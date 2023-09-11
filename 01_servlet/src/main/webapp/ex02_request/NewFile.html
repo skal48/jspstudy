@@ -33,6 +33,7 @@
      })  
   </script>
   
+  
   <hr>
   
   <!--3. <form> 태그로 요청하기(서브밋)  -->
@@ -51,6 +52,7 @@
         <button type="reset">입력 초기화</button>
       </div>
     </form>
+  </div>
     
     <script>
     $('#frm').submit(function(event){
@@ -64,7 +66,36 @@
       }
     })
     </script>
-  </div>
+    <hr>
+    
+    <!-- 4. 동일한 파라미터를 2개이상 요청하기   -->
+    <div>
+      <form method="post" action="/servlet/request">
+        <div>
+        <select name="tel">
+          <option value="010">010</option>  <!--value 가 없으면 값을 전달해 주지 않음  --> <!-- <option value="010">010</option> -->
+          <option value="02">02</option> <!-- <option value="02">02</option> -->
+          <option value="031">031</option> <!-- <option value="031"/>도 가능함 -->
+        </select>
+        <input type="text" name="tel">
+        <input type="text" name="tel">        
+        </div>
+        <div>
+          <input type="checkbox" name="hobbies" value="travel" id="travel">
+          <label for="travel">여행</label>
+          <input type="checkbox" name="hobbies" value="game" id="game">
+          <label for="game">게임</label>
+          <input type="checkbox" name="hobbies" value="golf" id="golf">
+          <label for="golf">골프</label>
+        </div>
+        <div>
+        <button type="submit">제출</button>
+        </div>
+      </form>
+    </div>
+    
+  
+    
   
 </body>
 </html>

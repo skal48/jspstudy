@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  
+  <div>
+    <form method="post" action="/servlet/response">
+      <div>
+        <input type="radio" name="gender" value="man" id="man">  <!-- 라디오는 하나만 가능 하기 때문에 배열이 아니라 String으로 받는다.  -->
+        <label for="man">남자</label>
+        <input type="radio" name="gender" value="woman" id="woman">
+        <label for="woman">여자</label>
+        <input type="radio" name="gender" value="none" id="none">
+        <label for="none">선택안함</label>
+      </div>
+      <div>
+        <input type="text" list="domain" name="domain"> <!-- 값을 전해줄려면 name 속성이 있어야함  -->
+        <datalist id="domain">
+          <option value="naver.com"/>  
+          <option value="kakao.com"/>  
+          <option value="gmail.com"/>  
+        </datalist>
+      </div>
+      <div>
+        <textarea rows="5" cols="50" name="content"></textarea>
+      </div>
+      <div>
+        <button type="submit">전송하기 </button>
+      </div>
+      <div>
+      <input type="hidden" name="region" value="seoul">
+      <button type="submit">전송하기 </button>
+      </div>
+    </form>
+  </div>
+  
+
+</body>
+</html>
