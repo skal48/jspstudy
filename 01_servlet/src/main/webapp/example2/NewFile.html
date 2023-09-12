@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+ <style>
+ 	.first ~ #calc {
+ 		
+ 	}
+ 
+ </style>
+	<div>
+		<div>
+			<button type="button" id="renew">새로고침</button>
+		</div>
+	<div class="first"></div><div>✕</div><div class="last"></div><div>=</div>
+	<input type="text" size=4>
+	<button type="submit" id="calc">계산</button>
+	</div>
+	
+	<script>
+	
+	function getRandomInt(start, count){
+	      return Math.floor((Math.random() * count) + start);
+
+	    }
+	
+		$('.first').text(getRandomInt(1,9));
+		$('.last').text(getRandomInt(1,9));
+		
+		
+	
+	
+	</script>
+	
+	
+</body>
+</html>
