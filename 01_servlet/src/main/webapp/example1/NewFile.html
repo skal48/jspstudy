@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <style>
+    .wrapper {
+    
+      border: 1px solid black;
+      width: 400px;
+      height: auto;
+      padding: 10px 10px;
+    }
+    div {
+     font-weight: 600;
+    }
+  </style>
+
+  <div>
+    <form method="post" action="/servlet/account">
+    <div class="wrapper">
+      <div>아이디</div>
+      <input type="text" name="id">@naver.com
+      <div>비밀번호</div>
+      <input type="password" name="pw1">
+      <div> 비밀번호 재확인</div>
+      <input type="password" name="pw2">
+      <div>이름</div>
+      <input type="text" name="name">
+      <div>생년월일</div>
+      <input type="text" name="year" placeholder="년(4자)" maxlength="4" width="4px">
+      <select name="month">
+        <option value="">월</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+      <input type="text" name=day placeholder="일" width="4px">
+      <div>성별</div>
+      <select name="gender">
+        <option value="">성별</option>
+        <option value="male">남성</option>
+        <option value="female">여성</option>
+        </select>
+        <div>본인 확인 이메일(선택)</div>
+        <input type="text" name="email" placeholder="선택입력">
+        <div>휴대전화</div>
+        <select name="national">
+        <option value="82">대한민국 +82</option>
+        <option value="1">미국 +1</option>
+        </select><br>
+        <input type="text" name=phone placeholder="전화번호 입력">
+        <button type="button" value="auth">인증받기</button><br>
+        <input type="text" name="authCheck" placeholder="인증번호 입력하세요"><br>
+        <button type="submit" id="final_submit">가입하기</button>      
+        </div>
+      </form>
+      
+      <script>
+      $('#final_submit').submit(function(event){
+        if($(this).val() === ''){
+          alert('아이디는 필수 입니다. ');        
+        }
+        event.preventDefault();
+        return;
+      })
+      
+      
+      
+      
+      </script>
+      
+  </div>
+
+
+
+
+</body>
+</html>

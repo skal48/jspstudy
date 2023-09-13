@@ -1,27 +1,23 @@
-package ex05_redirect;
+package ex07_binding;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.filters.SetCharacterEncodingFilter;
-
 /**
- * Servlet implementation class Redirect1
+ * Servlet implementation class Binding3
  */
-@WebServlet("/redirect1")
-public class Redirect1 extends HttpServlet {
+@WebServlet("/binding3")
+public class Binding3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Redirect1() {
+    public Binding3() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,20 +26,20 @@ public class Redirect1 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	  /*
-     * redirect
-     * 1. 다른 경로로 이동하는 방식 중 하나이다. 
-     * 2. 서버가 다른 경로를 응답하면 클라이언트가 해당 경로로 직접 이동하는 방식이다. 
-     * 3. 경로를 작성할 때 Contextpath와 URLMappting을 모두 작성한다.  
-     */
-	  
-	  //요청파라미터
-	  String name = request.getParameter("name");
-	  
-	  
-	  // redirect할 경로를 응답함
-	  response.sendRedirect("/servlet/redirect2?name=" + URLEncoder.encode(name,"UTF-8"));
+	  String msg1 = (String)request.getServletContext().getAttribute("msg");
+    System.out.println(msg1);
+    
+    //HttpSession 영역의 msg 확인하기 
+    String msg2 = (String)request.getSession().getAttribute("msg");
+    System.out.println(msg2);
+    
+    // HttpServletRequest 영역의 msg확인하기 
+    String msg3 = (String)request.getAttribute("msg");
+    System.out.println(msg3);
+    
+    //Binding4 로 redirect (응답처리)
+    response.sendRedirect("/servlet/binding4");
+    
 	}
 
 	/**
