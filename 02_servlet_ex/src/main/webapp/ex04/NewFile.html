@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+  $(function(){
+    $('#frm_write').on('submit', function(event){
+      if($('#writer').val() == '' || $('#title').val() == ''){
+        alert('작성자와 제목은 필수입니다.');
+        event.preventDefault();
+        return;
+      }
+    })
+  })
+</script>
+</head>
+<body>
+
+  <div>
+    <form id="frm_write" method="post" action="/servlet_ex/save">
+      <div>
+        <label for="writer">작성자</label>
+        <input type="text" id="writer" name="writer">
+      </div>
+      <div>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title">
+      </div>
+      <div>
+        <textarea name="content" rows="5" cols="30" placeholder="내용"></textarea>
+      </div>
+      <div>
+        <button type="submit">작성완료</button>
+        <input type="reset" value="작성초기화">
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

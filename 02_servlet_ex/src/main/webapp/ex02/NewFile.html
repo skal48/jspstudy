@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+
+  // gugudan 선언 함수 정의
+  function gugudan(){
+    var dan = parseInt(Math.random() * 8) + 2;  // 2~9 랜덤 생성
+    var num = parseInt(Math.random() * 9) + 1;  // 1~9 랜덤 생성
+    $('#span_dan').text(dan);
+    $('#span_num').text(num);
+    $('#hidden_dan').val(dan);
+    $('#hidden_num').val(num);
+    $('#result').val('').focus();  // 기존에 입력된 답안 지우고 포커스 옮기기
+  }
+  
+  $(function(){
+    // 초기 화면에 나타나는 구구단
+    gugudan();
+    // 새로고침을 누르면 나타나는 구구단
+    $('#btn_refresh').on('click', gugudan);  // 선언 함수를 이벤트 리스너로 사용하는 경우에는 괄호 없이 함수 이름만 등록함
+  })
+  
+</script>
+</head>
+<body>
+
+  <div>
+    <form method="post" action="/servlet_ex/gugudan">
+      <div>
+        <button type="button" id="btn_refresh">새로고침</button>
+      </div>
+      <span id="span_dan"></span>
+      <span>X</span>
+      <span id="span_num"></span>
+      <span>=</span>
+      <input type="text"   id="result"     name="result" size="4">
+      <input type="hidden" id="hidden_dan" name="dan">
+      <input type="hidden" id="hidden_num" name="num">
+      <button type="submit">계산</button>
+    </form>
+  </div>
+  
+</body>
+</html>

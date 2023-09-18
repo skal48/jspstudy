@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+  $(function(){
+    $('#btn_translate').on('click', function(){
+      if($('#text').val() == ''){
+        alert('번역할 텍스트를 입력하세요');
+        $('#text').focus();
+        return;
+      }
+      $.ajax({
+        type: 'get',
+        url: '/servlet_ex/papago',
+        data: $('#frm').serialize(),
+        dataType: 'json',
+        success: function(resData){
+          $('#translatedText').text(resData.message.result.translatedText);
+        },
+        // 아직 완료 전
+        error: function(jqXHR){
+          alert(jqXHR.responseText);
+        }
+      })
+    })
+  })
+</script>
+<style>
+  .papago {
+    display: flex;
+    justify-content: space-between;
+    width: 1380px;
+    margin: 0 auto;
+  }
+  .source_area, .target_area {
+    width: 640px;
+  }
+  .btn_area {
+    width: 50px;
+    line-height: 320px;
+    text-align: center;
+  }
+  #text, #translatedText {
+    width: 100%;
+    height: 300px;
+    border: 1px solid gray;
+    outline: 0;
+    font-size: 24px;
+  }
+  #text:focus, #translatedText:focus {
+    border: 1px solid skyblue;
+  }
+</style>
+</head>
+<body>
+
+  <form id="frm">
+    <div class="papago">
+      <div class="source_area">
+        <div>
+          <select name="source" id="source">
+            <option value="ko">한국어</option>
+            <option value="en">영어</option>
+            <option value="ja">일본어</option>
+          </select>
+        </div>
+        <div>
+          <textarea name="text" id="text"></textarea>
+        </div>
+      </div>
+      <div class="btn_area">
+        <button type="button" id="btn_translate">번역</button>
+      </div>
+      <div class="target_area">
+        <div>
+          <select name="target" id="target">
+            <option value="ko">한국어</option>
+            <option value="en">영어</option>
+            <option value="ja">일본어</option>
+          </select>
+        </div>
+        <div>
+          <textarea id="translatedText"></textarea>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+</body>
+</html>
