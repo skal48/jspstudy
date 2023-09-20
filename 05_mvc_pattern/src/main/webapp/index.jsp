@@ -12,11 +12,13 @@
 crossorigin="anonymous"></script>
 <script>
   $(function(){
-    $('#btn_submit').click(function(){
+    $('#btn').click(function(){
       if($('#type').val() === '1'){
-        $('#frm').attr('action', '${contextPath}/getDate.do');
+        location.href = '${contextPath}/getDate.do';
       } else if($('#type').val() === '2'){
-        $('#frm').attr('action', '${contextPath}/getTime.do');
+        location.href = '${contextPath}/getTime.do';
+      } else if($('#type').val() === '3'){
+        location.href = '${contextPath}/getDatetime.do';
       }
     })
   })
@@ -25,12 +27,13 @@ crossorigin="anonymous"></script>
 <body>
 
   <div>
-  <form id="frm" method="get">  
+  <form method="get">  
     <select id="type">
       <option value="1">현재날짜</option>
       <option value="2">현재시간</option>
+      <option value="3">현재날짜시간</option>
     </select>
-    <button id="btn_submit" type="submit">요청</button>
+    <button id="btn" type="button">요청</button>
   </form>
   </div>
 
