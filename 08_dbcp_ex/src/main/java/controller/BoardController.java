@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
+import filter.BoardFilter;
 import service.BoardService;
 import service.BoardServiceImpl;
 
@@ -51,8 +52,8 @@ public class BoardController extends HttpServlet {
     // 요청에 따른 처리
     switch(urlMapping) {
     // 단순 이동 (forward 처리)
-    case "/board/write.do":
-      af = new ActionForward("/board/write.jsp", false);
+    case "/board/writeArticle.do":
+      af = new ActionForward("/board/writeArticle.jsp", false);
       break;
     case "/board/index.do":
       af = new ActionForward("/index.jsp", false);
@@ -61,20 +62,23 @@ public class BoardController extends HttpServlet {
     case "/board/register.do":
       af = boardService.register(request);
       break;
-    case "/board/list.do":
+    case "/board/getArticleList.do":
       af = boardService.getBoardList(request);
       break;
-    case "/board/detail.do":
+    case "/board/getArticleDetail.do":
       af = boardService.getBoardByNo(request);
       break;
-    case "/board/edit.do":
+    case "/board/editArticle.do":
       af = boardService.edit(request);
       break;
-    case "/board/modify.do":
+    case "/board/modifyArticle.do":
       af = boardService.modify(request);
       break;
-    case "/board/delete.do":
+    case "/board/deleteArticle.do":
       af = boardService.delete(request);
+      break;
+    case "/board/pluseHit.do":
+      af = boardService.getHit(request);
       break;
     }
     

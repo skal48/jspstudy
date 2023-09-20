@@ -24,11 +24,13 @@ public class BoardServiceImpl implements BoardService {
     // 등록할 제목과 내용
     String title = request.getParameter("title");
     String content = request.getParameter("content");
+    String editor = request.getParameter("content");
     
-    // 제목 + 내용 -> BoardDto 객체
+    // 제목 + 내용 + 에디터-> BoardDto 객체
     BoardDto dto = BoardDto.builder()
                       .title(title)
                       .content(content)
+                      .editor(editor)
                       .build();
     
     // BoardDao의 register 메소드 호출
@@ -37,7 +39,7 @@ public class BoardServiceImpl implements BoardService {
     // 등록 성공(registerResult == 1), 등록 실패(registerResult == 0)
     String path = null;
     if(registerResult == 1) {
-      path = request.getContextPath() + "/board/list.do";
+      path = request.getContextPath() + "/board/getArticleList.do";
     } else if(registerResult == 0) {
       path =request.getContextPath() + "/index.do";
     }
@@ -73,8 +75,9 @@ public class BoardServiceImpl implements BoardService {
     
     // 게시글 목록과 paging을 board/list.jsp로 전달하기 위하여 request에 저장한 뒤 forward한다.
     request.setAttribute("boardList", boardList);
-    request.setAttribute("paging", pageVo.getPaging(request.getContextPath() +"/board/list.do"));
-    return new ActionForward("/board/list.jsp", false);
+    request.setAttribute("paging", pageVo.getPaging(request.getContextPath() +"/board/getArticleList.do"));
+    
+    return new ActionForward("/board/getArticleList.jsp", false);
     
   }
   
@@ -91,9 +94,25 @@ public class BoardServiceImpl implements BoardService {
     // 게시글을  /board/detail.jsp에 전달하기 위해서 forward 처리 
     request.setAttribute("board", board);
     
-    return new ActionForward("/board/detail.jsp", false);
+    return new ActionForward("/board/getArticleDetail.jsp", false);
   }
 
+  
+  @Override
+  public ActionForward getHit(HttpServletRequest request) {
+  
+      
+    
+    
+    
+    return null;
+  }
+  
+  
+  
+  
+  
+  
   @Override
   public ActionForward edit(HttpServletRequest request) {
     
@@ -106,7 +125,7 @@ public class BoardServiceImpl implements BoardService {
     
     // 게시글을  /board/edit.jsp에 전달하기 위해서 forward 처리 
     request.setAttribute("board", board);
-    return new ActionForward("/board/edit.jsp", false);
+    return new ActionForward("/board/editArticle.jsp", false);
        
   }
   
@@ -152,7 +171,7 @@ public class BoardServiceImpl implements BoardService {
     // 삭제 성공(deleteResult == 1), 삭제 실패 (deleteResult ==0)
     String path = null;
     if(deleteResult == 1 ) {
-      path = request.getContextPath() + "board/list.do";
+      path = request.getContextPath() + "board/getArticleList.do";
       
     }else if(deleteResult == 0) {
       path = request.getContextPath() + "/index.do";

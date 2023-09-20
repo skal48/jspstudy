@@ -11,12 +11,10 @@
 </head>
 <body>
 
-  <div>
-    <a href="${contextPath}/board/write.do">작성하러가기</a>
-  </div>
-
-  <hr>
-  
+ <div>
+    <a href="${contextPath}/board/getArticleList.do">기사목록</a>
+ 
+ </div>
 
 </body>
 </html>

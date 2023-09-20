@@ -64,7 +64,7 @@ public class BoardDao {
       con = dataSource.getConnection();
       
       // 쿼리문 작성 
-      String sql = "INSERT INTO BOARD_T(BOARD_NO, TITLE, CONTENT, MODIFIED_AT, CREATED_AT) VALUES (BOARD_SEQ.NEXTVAL, ?, ?, SYSDATE, SYSDATE)";
+      String sql = "INSERT INTO ARTICLE_T(BOARD_NO, TITLE, CONTENT, EDITOR, HIT, MODIFIED_AT, CREATED_AT) VALUES (BOARD_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE, SYSDATE)";
       
       // ps 객체 생성 (쿼리문 실행을 담당하는 객체)
       ps = con.prepareStatement(sql);
@@ -72,6 +72,8 @@ public class BoardDao {
       // 쿼리문의 변수(?로 처리된 부분)에 값을 전달
       ps.setString(1, dto.getTitle());   // 1번째 물음표(?)에 dto.getTitle() 전달하기
       ps.setString(2, dto.getContent()); // 2번째 물음표(?)에 dto.getContent() 전달하기
+      ps.setString(3, dto.getEditor()); // 2번째 물음표(?)에 dto.getContent() 전달하기
+      ps.setInt(4, dto.getHit()); // 2번째 물음표(?)에 dto.getContent() 전달하기
       
       // 쿼리문의 실행
       insertResult = ps.executeUpdate();
@@ -87,8 +89,30 @@ public class BoardDao {
     
   }
   
+  public int getHitCount() {
+    
+    int hitCount = 0;
+    
+    try {
+      
+      con = dataSource.getConnection();
+      
+      String sql = "update article_t set hit = hit + 1 where article_no = 3";
+      
+      
+      
+    } catch(Exception e) {
+      e.printStackTrace();
+    }finally {
+      close();
+    }
+    
+    return hitCount;
+    
+  }
+  
   // 게시글 개수 반환 메소드
-  public int getBoardCount() {
+   public int getBoardCount() {
     
     // 게시글 개수
     int count = 0;
@@ -96,7 +120,7 @@ public class BoardDao {
     try {
       
       con = dataSource.getConnection();
-      String sql = "SELECT COUNT(*) FROM BOARD_T";  //  COUNT(*)
+      String sql = "SELECT COUNT(*) FROM ARTICLE_T";  //  COUNT(*)
                                                     //  --------
                                                     //     120
       ps = con.prepareStatement(sql);
@@ -116,6 +140,10 @@ public class BoardDao {
     
   }
   
+  
+  
+  
+  
   // 게시글 목록 반환 메소드
   public List<BoardDto> getBoardList(Map<String, Object> map){
     
@@ -125,8 +153,8 @@ public class BoardDao {
     try {
       
       con = dataSource.getConnection();
-      String sql = "SELECT A.BOARD_NO, A.TITLE, A.CONTENT, A.MODIFIED_AT, A.CREATED_AT"
-                 + "  FROM (SELECT ROW_NUMBER() OVER (ORDER BY BOARD_NO DESC) AS RN, BOARD_NO, TITLE, CONTENT, MODIFIED_AT, CREATED_AT"
+      String sql = "SELECT A.ARTICLE_NO, A.TITLE, A.CONTENT, A.EDITOR, A.HIT, A.MODIFIED_AT, A.CREATED_AT"
+                 + "  FROM (SELECT ROW_NUMBER() OVER (ORDER BY BOARD_NO DESC) AS RN, BOARD_NO, TITLE, CONTENT, EDITOR, HIT, MODIFIED_AT, CREATED_AT"
                  + "          FROM BOARD_T) A"
                  + " WHERE A.RN BETWEEN ? AND ?";
       ps = con.prepareStatement(sql);
@@ -139,8 +167,10 @@ public class BoardDao {
                         .board_no(rs.getInt(1))
                         .title(rs.getString(2))
                         .content(rs.getString(3))
-                        .modified_at(rs.getDate(4))
-                        .created_at(rs.getDate(5))
+                        .editor(rs.getString(4))
+                        .hit(rs.getInt(5))
+                        .modified_at(rs.getDate(6))
+                        .created_at(rs.getDate(7))
                         .build();
         // BoardDto -> list 추가
         list.add(dto);
@@ -167,9 +197,9 @@ public class BoardDao {
    try {
      
      con = dataSource.getConnection();
-     String sql = "SELECT BOARD_NO, TITLE, CONTENT, MODIFIED_AT, CREATED_AT"
-                + "  FROM BOARD_T"
-                + " WHERE BOARD_NO = ?";
+     String sql = "SELECT ARTICLE_NO, TITLE, EDITOR, HIT, CONTENT, MODIFIED_AT, CREATED_AT"
+                + "  FROM ARTICLE_T"
+                + " WHERE ARTICLE_NO = ?";
      
      ps = con.prepareStatement(sql);
      ps.setInt(1, board_no);
@@ -180,8 +210,10 @@ public class BoardDao {
            .board_no(rs.getInt(1))
            .title(rs.getString(2))
            .content(rs.getString(3))
-           .modified_at(rs.getDate(4))
-           .created_at(rs.getDate(5))
+           .editor(rs.getString(4))
+           .hit(rs.getInt(5))           
+           .modified_at(rs.getDate(6))
+           .created_at(rs.getDate(7))
            .build();
      }
      
@@ -207,12 +239,13 @@ public class BoardDao {
     try {
       
       con = dataSource.getConnection();
-      String sql = "UPDATE BOARD_T"
-                  +"   SET TITLE = ?, CONTENT = ?, MODIFIED_AT = SYSDATE"
+      String sql = "UPDATE ARTICLE_T"
+                  +"   SET TITLE = ?, CONTENT = ?, EDITOR = ?, MODIFIED_AT = SYSDATE"
                   +" WHERE BOARD_NO = ?";  
       ps = con.prepareStatement(sql);
       ps.setString(1, dto.getTitle());
       ps.setString(2, dto.getContent());
+      ps.setString(2, dto.getEditor());
       ps.setInt(3, dto.getBoard_no());
       modifyResult = ps.executeUpdate(); 
       
@@ -235,7 +268,7 @@ public class BoardDao {
     try {
       
       con = dataSource.getConnection();
-      String sql = "DELETE FROM BOARD_T WHERE BOARD_NO = ?";
+      String sql = "DELETE FROM ARTICLE_T WHERE BOARD_NO = ?";
       ps = con.prepareStatement(sql);
       ps.setInt(1,  board_no);
       deleteResult = ps.executeUpdate();

@@ -13,7 +13,7 @@ $(function(){
   
 // 함수 호출
 fnBoardList();
-fnBoardRegister();
+fnBoardModify();
 })
 
 // 함수 정의 
@@ -22,8 +22,8 @@ function fnBoardList() {
   location.href = '${contextPath}/board/list.do';   
   })
  }
-  function fnBoardRegister() {
-    $('#frm_register').submit(function(event){
+  function fnBoardModify() {
+    $('#frm_edit').submit(function(event){
       if($('#title').val()=== ''){
         alert('제목은 필수 입니다.');
         $('#title').focus();
@@ -40,16 +40,19 @@ function fnBoardList() {
 <body>
 
     <div>
-      <form id="frm_register"method="post" action="${contextPath}/board/register.do">
+      <form id="frm_edit"method="post" action="${contextPath}/board/modify.do">
       <div>
         <label for="title">제목</label>
-        <input type="text" id="title" name="title">    
+        <input type="text" id="title" name="title" value="${board.title}">    
+        <label for="editor">작성자</label>
+        <input type="text" id="editor" name="editor" value="${board.title}">
     </div>
     <div>
-      <textarea rows="5" cols="50" name="content"></textarea>
+      <textarea rows="5" cols="50" name="content">${board.content}</textarea>
     </div>
     <div>
-      <button type="submit">작성완료</button>
+    <input type="hidden" name="board_no" value="${board.board_no }">
+      <button type="submit">수정완료</button>
       <button type="reset">작성초기화</button>
       <button type="button" id="btn_list">목록으로 이동</button>
      </div>
