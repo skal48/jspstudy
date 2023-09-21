@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class ActionForward {
   private String path;
-  private boolean isredirect;
+  private boolean isRedirect;
 }

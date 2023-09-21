@@ -1,12 +1,11 @@
-package domin;
+package domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,9 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookDto {
   private int bookNo;
-  private String author;
   private String title;
+  private String author;
   private int price;
   private Date pubdate;
-  
 }
