@@ -36,17 +36,17 @@
     <a href="${contextPath}/book/write.do">작성하러가기</a>
     <a href="${contextPath}/book/list.do">목록으로이동</a>
     <a href="${contextPath}/book/edit.do?book_no=${book.book_no}">수정하러가기</a>
-    <a id="delete_link" href="${contextPath}/book/delete.do?book_no=${book.book_no}">삭제하기</a>
+    <a id="delete_link" href="${contextPath}/book/delete.do?book_no=${book.bookNo}">삭제하기</a>
   </div>
 
   <hr>
   
   <div>
-    <div>게시글번호: ${book.book_no}</div>
+    <div>게시글번호: ${book.bookNo}</div>
     <div>제목: ${book.title}</div>
     <div><pre>${book.content}</pre></div>
-    <div>최종수정일: ${book.modified_at}</div>
-    <div>최초작성일: ${book.created_at}</div>
+    <div>가격: ${book.price}</div>
+    <div>출판일: ${book.pubdate}</div>
   </div>
 
 </body>

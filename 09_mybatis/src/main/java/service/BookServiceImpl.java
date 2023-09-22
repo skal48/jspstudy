@@ -1,5 +1,7 @@
 package service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,8 +21,17 @@ public class BookServiceImpl implements BookService {
   @Override
   public ActionForward getBookByNo(HttpServletRequest request) {
     
+    //상세 조회할 게시글의 번호 
+    Optional<String> opt = Optional.ofNullable(request.getParameter("book_no"));
+    int book_no = Integer.parseInt(opt.orElse("0"));
     
-    return null;
+    //DB로 부터 게시글 가져 오기
+    BookDto book = dao.bookDetail(book_no);
+    
+    //게시글을 /book/detial.jsp 에 전달하기 위해서 forward 처리
+    request.setAttribute("book", book);
+     
+    return new ActionForward("/book/detail.jsp", false);
   }
   
   @Override
@@ -40,9 +51,18 @@ public class BookServiceImpl implements BookService {
     pageVo.setPaging(page, total, display);
     
     // 게시글 목록을 가져올 때 사용할 변수들을 Map으로 만듬
-    Map<String, Object> 
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("begin", pageVo.getBegin());
+    map.put("end", pageVo.getEnd());
+    
+    //DB로 부터 게시들 목록 가져오기 
+    List<BookDto> BookList = dao.bookList(map);
+    
+    //게시글 목록과 paging을 book/list.jsp로 전달하기 위하여 request에 저장한뒤 forward한다. 
+    request.setAttribute("bookList", BookList);
+    request.setAttribute("paging", pageVo.getPaging(request.getContextPath() + "/book/list.do"));
 
-    return null;
+    return new ActionForward("/book/list.jsp",false);
   }
   
   @Override
@@ -79,23 +99,71 @@ public class BookServiceImpl implements BookService {
  
   @Override
   public ActionForward edit(HttpServletRequest request) {
-
-
-    return null;
+    
+    // 상세조회할 게시글의 번호 
+    Optional<String> opt = Optional.ofNullable(request.getParameter("book_no"));
+    int book_no= Integer.parseInt(opt.orElse("0"));
+    
+    //DB로부터  게시글 가져오기
+    BookDto book = dao.bookDetail(book_no);
+    
+    //게시글을 /book/edit.jsp 에 전달하기 위해서 forward 처리
+    request.setAttribute("book", book);
+    
+    return new ActionForward("/book/edit.jsp", false);
+    
   }
   
   @Override
   public ActionForward modify(HttpServletRequest request) {
+    //수정할 게시글 정보
+    String title = request.getParameter("title");
+    String author = request.getParameter("author");
+    int price = Integer.parseInt(request.getParameter("price"));
+    int book_no = Integer.parseInt(request.getParameter("book_no"));
+    
+    // 수정할 게시글 정보를 BookDto의 객체로 생성
+    BookDto dto = BookDto.builder()
+                       .title(title) 
+                       .author(author)
+                       .price(price)
+                       .bookNo(book_no)
+                       .build();
+    //수정하기 
+    int modifyResult = dao.bookModify(dto);
+    
+    //수정 성공(modifyResult == 1), 수정 실패(ModifyResult == 0)
+    
+    String path = null;
+    
+    if(modifyResult == 1) {
+      path = request.getContextPath() + "/book/detail.do?book_no=" + book_no;
+    } else {
+      path=request.getContextPath() + "/index.do";
+    }
 
-
-    return null;
+    //update 이후에는 redirect 한다.
+    return new ActionForward(path, true);
   
   
   }@Override
   public ActionForward delete(HttpServletRequest request) {
-
-
-    return null;
+    // 삭제할 책 번호 
+    Optional<String> opt = Optional.ofNullable(request.getParameter("book_no"));
+    int book_no = Integer.parseInt(opt.orElse("0"));
+    
+    int deleteResult = dao.bookDelete(book_no);
+    
+    //삭제 성공(deleteResult == 1 ), 삭제 실패 (deleteResult == 0)
+    String path = null;
+    if(deleteResult == 0) {
+      path = request.getContextPath() + "book/list.do";
+    } else if(deleteResult == 0) {
+      path = request.getContextPath() + "/index.do";
+    }
+    
+    //delete 이후에는 redirect 한다.  
+    return new ActionForward(path, true);
   }
   
 }

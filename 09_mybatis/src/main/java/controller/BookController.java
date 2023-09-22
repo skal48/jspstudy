@@ -52,22 +52,22 @@ public class BookController extends HttpServlet {
       break;
     // 서비스 처리
     case "/book/register.do":
-      af = BookService.register(request);
+      af = bookService.register(request);
       break;
     case "/book/list.do":
-      af = BookService.getBookList(request);
+      af = bookService.getBookList(request);
       break;
     case "/book/detail.do":
-      af = BookService.getBookByNo(request);
+      af = bookService.getBookByNo(request);
       break;
     case "/book/edit.do":
-      af = BookService.edit(request);
+      af = bookService.edit(request);
       break;
     case "/book/modify.do":
-      af = BookService.modify(request);
+      af = bookService.modify(request);
       break;
     case "/book/delete.do":
-      af = BookService.delete(request);
+      af = bookService.delete(request);
       break;
     }
     

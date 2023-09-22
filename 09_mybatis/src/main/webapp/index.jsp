@@ -12,7 +12,7 @@
 <body>
 
  <div>
-    <a href="${contextPath}/board/getBookList.do">책 목록</a>
+    <a href="${contextPath}/book/List.do">책 목록</a>
  
  </div>
 
