@@ -25,7 +25,9 @@ public class BoardDao {
   
   // Singleton Pattern으로 BoardDao 객체 생성
   private static BoardDao dao = new BoardDao();
+  
   private BoardDao() {
+
     // META-INF/context.xml에 있는 <Resource name="jdbc/oraclexe" /> 태그 내용을 읽어서 DataSource 객체 생성하기
     try {
       Context context = new InitialContext();
@@ -35,6 +37,7 @@ public class BoardDao {
       e.printStackTrace();
     }
   }
+  
   public static BoardDao getDao() {
     return dao;
   }
@@ -157,7 +160,7 @@ public class BoardDao {
     
   }
   
-  //게시글 반환 메소드
+  //게시글 상세 반환 메소드
   public BoardDto getBoardByNo(int board_no) {
     
     //게시글

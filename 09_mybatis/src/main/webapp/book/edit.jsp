@@ -19,7 +19,7 @@
   // 함수 정의
   function fnBoardList(){
     $('#btn_list').click(function(){  
-      location.href = '${contextPath}/board/list.do';
+      location.href = '${contextPath}/book/list.do';
     })
   }
   // 함수 정의
@@ -39,7 +39,7 @@
 <body>
 
 <div>
-  <form id="frm_edit" method="post" action="${contextPath}/board/modify.do">
+  <form id="frm_edit" method="post" action="${contextPath}/book/modify.do">
     <div>
       <label for="title">제목</label>
       <input type="text" id="title" name="title" value="${board.title}">
@@ -48,7 +48,7 @@
       <textarea rows="5" cols="50" name="content">${board.content}</textarea>
     </div>
     <div>
-      <input type="hidden" name="board_no" value="${board.board_no}">
+      <input type="hidden" name="book_no" value="${board.board_no}">
       <button type="submit">수정완료</button>
       <button type="reset">작성초기화</button>
       <button type="button" id="btn_list">목록으로이동</button>
